@@ -4,10 +4,8 @@ import {
 					StyleSheet,
 					Text,
 					View,
-					TextInput,
-					TouchableOpacity,
-					KeyboardAvoidingView,
 					Button,
+					Image
 			} from 'react-native';
 
 class Home extends React.Component{
@@ -15,7 +13,16 @@ class Home extends React.Component{
 	render(){
 		 return (
       <View style={styles.container}>
-        <Text>Logged in successfully</Text>
+        <Image
+          style={styles.home_image}
+          source={{uri: 'http://indianonlineseller.com/wp-content/uploads/2013/12/buildabazzar.png'}}
+        />
+        <Button 
+            style={styles.buttonLink} 
+            onPress={() => this.props.navigation.navigate('Purchases')} 
+            title='PURCHASES'
+            accessibilityLabel="Purchases"
+        />
       </View>
     );
 	}
@@ -23,10 +30,20 @@ class Home extends React.Component{
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+  	height: 600,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center',   
+  },
+  home_image: {
+  	width: 350,
+  	height: 200,
+  	resizeMode: 'contain'
+  },
+  buttonLink: {
+    backgroundColor: '#4286f4',
+    paddingVertical: 15,
+    textAlign: 'center',
+    color: '#ffffff'
   },
 });
 

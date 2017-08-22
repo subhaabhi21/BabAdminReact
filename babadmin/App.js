@@ -5,25 +5,18 @@ import {
           Text, 
           View,
        } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import Login from './components/Login/login';
 import Home from './components/Login/home';
+import Purchase from './components/Purchase/purchase_home';
 
-export default class App extends React.Component {
 
-  render() {
-      return (   
-       <View style={styles.container}>
-        <Login />
-       </View>
-    );
-  }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const AppStart = StackNavigator({
+  Login: { screen: Login },
+  Home: { screen: Home },
+  Purchases: {screen: Purchase},
 });
+
+
+export default AppStart;

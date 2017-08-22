@@ -8,7 +8,6 @@ import {
 					TouchableOpacity,
 					KeyboardAvoidingView,
 					Button,
-					Navigator,
 			} from 'react-native';
 
 class Home extends React.Component{

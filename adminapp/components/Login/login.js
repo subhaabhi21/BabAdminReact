@@ -8,7 +8,6 @@ import {
           TouchableOpacity, 
           KeyboardAvoidingView, 
           Button,
-          Navigator,
         } from 'react-native';
 import api from '../app_common/common';
 import Home from './home';
@@ -16,7 +15,6 @@ import Home from './home';
 class Login extends React.Component {
 
   constructor() {
-      console.log("inn constructor of Login")
     super();
   
     this.state = {
@@ -37,11 +35,7 @@ class Login extends React.Component {
         this.setState({
           login: response
         })
-        
-        // this.props.navigator.push({
-        //   name: 'Home',
-        // })
-
+        this.props.navigation.navigate('Home')
         console.log("JSON response : ",JSON.stringify(this.state.login, null, 4))
       })
       
@@ -50,6 +44,7 @@ class Login extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
+        <Text style={styles.app_title}>ADMIN APP</Text>
         <Text>Domain: </Text>
         <TextInput 
             style={styles.input}
@@ -58,7 +53,6 @@ class Login extends React.Component {
         <Text>Username: </Text>
         <TextInput 
             placeholder='Email' 
-            placeholderTextColor='#4286f4' 
             style={styles.input}
             returnKeyType='next'
             onSubmitEditing={() => this.passwordInput.focus()}
@@ -75,9 +69,17 @@ class Login extends React.Component {
             ref={(input) => this.passwordInput = input}
             onChangeText={(usertext) => this.setState({password: usertext})}
         />
+          <Text>Password: </Text>
+           <Text>Password: </Text>
+            <Text>Password: </Text>
+             <Text>Password: </Text>
+              <Text>Password: </Text>
+               <Text>Password: </Text>
+
+       
         <Button 
             style={[styles.buttonContainer,styles.buttonText]} 
-            onPress={this._authenticate()} 
+            onPress={this._authenticate} 
             title='LOGIN'
             accessibilityLabel="Click to login"
         />
@@ -89,9 +91,8 @@ class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
-    height: 1000,
+    height: 500,
     width: 350
   },
   input: {
@@ -105,6 +106,10 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     color: '#ffffff'
+  },
+  app_title: {
+    fontSize: 20,
+    textAlign: 'center',
   }
 });
 

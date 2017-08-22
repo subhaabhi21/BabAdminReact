@@ -19,29 +19,33 @@ class Login extends React.Component {
   
     this.state = {
       login: {},
-      domain: '',
-      username: '',
-      password: ''
+      domain: 'http://admin.amul.cc.buildabazaar.com',
+      username: 'a@a.com',
+      password: '123456'
     };
     this._authenticate = this._authenticate.bind(this);
   }
 
   _authenticate(){
-      var link = 'http://admin.amul.cc.buildabazaar.com/api/v1/user_sessions/login.json?';
-      var url = link.concat('customer%5Bemail%5D=',this.state.username,'&customer%5Bpassword%5D=',this.state.password);
+
+      var domain = this.state.domain;
+      var link = '/api/v1/user_sessions/login.json?';
+      var url = domain.concat(link,'customer%5Bemail%5D=',this.state.username,'&customer%5Bpassword%5D=',this.state.password);
       var fetch_type='POST';
 
-      api.authenticate(url,fetch_type).then((response) => {
+      fetch(url,{method: fetch_type}).then((response) => response.json()).then((response) => {
         this.setState({
           login: response
         })
-        
-        // this.props.navigator.push({
-        //   name: 'Home',
-        // })
+        console.log("login resp; ",this.state.login)
+        api.setHeaderToken(this.state.login.headers._token);
+        api.setDomain(this.state.domain);
 
-        console.log("JSON response : ",JSON.stringify(this.state.login, null, 4))
-      })
+        console.log("doamin set to: ",api.getDomain())
+        this.props.navigation.navigate('Home');
+      }).catch((error) => {
+        console.error(error);
+      });
       
   }
 
@@ -52,6 +56,7 @@ class Login extends React.Component {
         <Text>Domain: </Text>
         <TextInput 
             style={styles.input}
+            value={this.state.domain}
             onChangeText={(usertext) => this.setState({domain: usertext})}
         />
         <Text>Username: </Text>
@@ -62,6 +67,7 @@ class Login extends React.Component {
             onSubmitEditing={() => this.passwordInput.focus()}
             autoCapitalize='none'
             autoCorrect={false}
+            value={this.state.username}
             onChangeText={(usertext) => this.setState({username: usertext})}
         />
         <Text>Password: </Text>
@@ -70,6 +76,7 @@ class Login extends React.Component {
             secureTextEntry 
             returnKeyType='go'
             style={styles.input}
+            value={this.state.password}
             ref={(input) => this.passwordInput = input}
             onChangeText={(usertext) => this.setState({password: usertext})}
         />
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     height: 500,
-    width: 350
+    width: 340
   },
   input: {
     height: 40,
