@@ -43,6 +43,14 @@ var api= {
 	  return str.join("&");
 	},
 
+	get_dummy_purchases() {
+		var url = 'http://admin.amul.cc.buildabazaar.com/api/v1/purchases/get_purchases.json?headers%5B_token%5D=df0a96ddbe1ada9fda4b1ed9b02cf67c&search%5Bemail_eq%5D=&search%5Bstatus_eq%5D=';
+
+		var fetch_type = 'GET';
+		return  fetch(url,{method: fetch_type}).then((response) => response.json())
+
+	},
+
 }
 
 module.exports = api;
