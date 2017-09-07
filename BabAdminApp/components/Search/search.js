@@ -8,10 +8,12 @@ import {
 					KeyboardAvoidingView,
 					FlatList,
 					Image,
+					Modal,
+					ToastAndroid
 			} from 'react-native';
 
 import Api from '../app_common/common';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker } from 'native-base'
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker, Root, Toast } from 'native-base'
 
 class SearchScreen extends React.Component{
 	static navigationOptions = {
@@ -43,7 +45,8 @@ class SearchScreen extends React.Component{
 											code: "price_in_asc",
 											selected: false,
 											text: "Sort Price Low to High"
-										}]
+										}],
+			filter_modal_visible: false
 			}
 		this.search();
 	}
@@ -113,26 +116,38 @@ class SearchScreen extends React.Component{
 
   _keyExtractor = (item, index) => item.variant_id;
 
+  showFilterModal(){
+  	console.log("in showFilterModal")
+  	this.setState({
+			filter_modal_visible: true
+		})
+  }
+
 	render(){
 
      return (
-
+     	<Root>
 			 <Container>
-				 <Header padder searchBar rounded>
-					 <Left>
-	           <Button transparent>
-	             <Icon name='menu' />
-	           </Button>
-	         </Left>
-						<Item>
-	            <Icon name="ios-search" />
-	            <Input placeholder="Search"
-							 onChangeText={(text) => this.setState({query : text})}/>
-	          <Button transparent onPress={() => this.search()}>
-	            <Text>Search</Text>
-	          </Button>
-					</Item>
-        </Header>
+					 <Header padder searchBar rounded>
+						 <Left>
+		           <Button transparent>
+		             <Icon name='menu' />
+		           </Button>
+		         </Left>
+							<Item>
+		            <Icon name="ios-search" />
+		            <Input placeholder="Search"
+								 onChangeText={(text) => this.setState({query : text})}/>
+		          <Button transparent onPress={() => this.search()}>
+		            <Text>Search</Text>
+		          </Button>
+						</Item>
+						<Right>
+							<Button transparent onPress={() => this.showFilterModal()}>
+			             <Icon name='ios-funnel' />
+			         </Button>
+		         </Right>
+	        </Header>
 					<Picker
             mode="dropdown"
             selectedValue={this.state.current_sort_option}
@@ -161,7 +176,42 @@ class SearchScreen extends React.Component{
 		          }
 		        />
 		      </View>
+
+		      <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.filter_modal_visible}
+          onRequestClose={() => {Toast.show({
+              text: 'You are trying to close modal!',
+              position: 'bottom',
+              duration: 5000
+            })}}
+          >
+          	<Header padder searchBar rounded>
+          	<Left>
+          	<Button transparent onPress={() => {Toast.show({
+              text: 'You are trying to close modal!',
+              position: 'bottom',
+              buttonText: 'Close'
+            })}}>
+					             <Text>Toast with button</Text>
+					         </Button>
+					         </Left>
+								<Right>
+									<Button transparent onPress={() => this.setState({filter_modal_visible : false})}>
+					             <Icon name='ios-close' />
+					         </Button>
+				         </Right>
+	        	</Header>
+		         <View style={{marginTop: 22}}>
+		          <View>
+		            <Text>Hello World!</Text>
+		          </View>
+		         </View>
+        </Modal>
+
 				</Container>
+			</Root>
     );
 	}
 }
