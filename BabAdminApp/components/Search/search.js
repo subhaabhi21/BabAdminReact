@@ -46,7 +46,8 @@ class SearchScreen extends React.Component{
 											selected: false,
 											text: "Sort Price Low to High"
 										}],
-			filter_modal_visible: false
+			filter_modal_visible: false,
+			in_wishlist: {}
 			}
 		this.search();
 	}
@@ -58,7 +59,16 @@ class SearchScreen extends React.Component{
 									} , () => this.search())
 	}
 
+	toggleWishlist(key){
+		console.log("prev value : ",this.state.in_wishlist[key],key)
 
+
+		let data = {...this.state.in_wishlist}; 
+		data[key] = !(this.state.in_wishlist[key]);
+		this.setState({in_wishlist: data} , () => console.log("after: ",this.state.in_wishlist[key]));
+
+
+	}
 
 
 	search(){
@@ -98,6 +108,23 @@ class SearchScreen extends React.Component{
 					browse_node_tree : response.result.facets.browse_nodes,
 					current_sort_option : response.result.current_sort_option
 				})
+				console.log("in_wishlist: ", this.state.in_wishlist)
+
+ 				var temp = {}
+				response.result.variants.forEach(function(element) {
+				    // console.log("title",element.title);
+				    // this.setState(prevState => ({in_wishlist: {
+				    //     ...prevState.in_wishlist, [element.title]: false}
+				    // }))
+				    temp[element.title] = false			   
+
+				});
+				console.log("temp ",temp)
+				 this.setState(prevState => ({in_wishlist: {
+        ...prevState.in_wishlist,...temp}
+    }))
+
+
 			}
 			else{
 				if(response.error)
@@ -170,8 +197,16 @@ class SearchScreen extends React.Component{
 		            <View style = {styles.catalog}>
 									<Image source={{uri: item.default_image.url}}
        						style={{width: 100, height: 100}} />
-		              <Text > {item.title}</Text>
-		              <Text >Price : {item.final_price.value}</Text>
+       						<View style={styles.catalog_details}>
+			              <Text > {item.title}</Text>
+			              <Text >Price : {item.final_price.value}</Text>
+			            </View>
+			            <View style={styles.catalog_details}>
+			            	<Button transparent onPress={() => {this.toggleWishlist(item.title)}}>
+			            			<Icon name = { this.state.in_wishlist[item.title] ? 'ios-heart' : 'ios-heart-outline'} /> 
+												   			
+										</Button>
+			            </View>
 		            </View>
 		          }
 		        />
@@ -224,10 +259,16 @@ const styles = StyleSheet.create({
   },
   catalog: {
     flex: 1,
+    flexDirection: 'row',
     marginBottom: 10,
     padding:10,
 		backgroundColor:'#fff'
 
+  },
+  catalog_details: {
+  	flex: 1,
+  	flexDirection: 'column',
+  	backgroundColor:'#fff'
   },
 	buttonContainer: {
 		backgroundColor: '#4286f4',
