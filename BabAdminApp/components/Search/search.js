@@ -61,13 +61,9 @@ class SearchScreen extends React.Component{
 
 	toggleWishlist(key){
 		console.log("prev value : ",this.state.in_wishlist[key],key)
-
-
 		let data = {...this.state.in_wishlist}; 
 		data[key] = !(this.state.in_wishlist[key]);
 		this.setState({in_wishlist: data} , () => console.log("after: ",this.state.in_wishlist[key]));
-
-
 	}
 
 
@@ -108,18 +104,10 @@ class SearchScreen extends React.Component{
 					browse_node_tree : response.result.facets.browse_nodes,
 					current_sort_option : response.result.current_sort_option
 				})
-				console.log("in_wishlist: ", this.state.in_wishlist)
-
  				var temp = {}
 				response.result.variants.forEach(function(element) {
-				    // console.log("title",element.title);
-				    // this.setState(prevState => ({in_wishlist: {
-				    //     ...prevState.in_wishlist, [element.title]: false}
-				    // }))
 				    temp[element.title] = false			   
-
 				});
-				console.log("temp ",temp)
 				 this.setState(prevState => ({in_wishlist: {
         ...prevState.in_wishlist,...temp}
     }))
