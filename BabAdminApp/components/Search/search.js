@@ -14,6 +14,7 @@ import {
 
 import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker, Root, Toast } from 'native-base'
+import CatalogRow from './catalog_row_search.js';
 
 class SearchScreen extends React.Component{
 	static navigationOptions = {
@@ -175,29 +176,14 @@ class SearchScreen extends React.Component{
 						}
           </Picker>
 		      <View style={styles.container}>
-						{ Api.isLoading ?  <ActivityIndicator /> : null}
-						<FlatList
-		          data={this.state.variants}
-		          keyExtractor={this._keyExtractor}
-							onEndReached = {this.loadMore}
-							onEndThreshold = {20}
-		          renderItem={({item}) =>
-		            <View style = {styles.catalog}>
-									<Image source={{uri: item.default_image.url}}
-       						style={{width: 100, height: 100}} />
-       						<View style={styles.catalog_details}>
-			              <Text > {item.title}</Text>
-			              <Text >Price : {item.final_price.value}</Text>
-			            </View>
-			            <View style={styles.catalog_details}>
-			            	<Button transparent onPress={() => {this.toggleWishlist(item.title)}}>
-			            			<Icon name = { this.state.in_wishlist[item.title] ? 'ios-heart' : 'ios-heart-outline'} /> 
-												   			
-										</Button>
-			            </View>
-		            </View>
-		          }
-		        />
+							{ Api.isLoading ?  <ActivityIndicator /> : null}
+							<FlatList
+			          data={this.state.variants}
+			          keyExtractor={this._keyExtractor}
+								onEndReached = {this.loadMore}
+								onEndThreshold = {20}
+			          renderItem={({item, index}) => <CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)}/> }
+			        />
 		      </View>
 
 		      <Modal
