@@ -55,10 +55,11 @@ const styles = StyleSheet.create({
   catalog: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between' ,
+    alignItems: 'center',
     marginBottom: 10,
     padding:10,
 		backgroundColor:'#fff'
-
   },
   catalog_details: {
   	flex: 1,

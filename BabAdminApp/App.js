@@ -17,10 +17,10 @@ import SearchScreen from './components/Search/search';
 
 
 const AdminApp = StackNavigator({
+  Search : {screen : SearchScreen},
   Login: { screen: LoginScreen },
   Home: { screen: HomeScreen },
-  Purchases: { screen: PurchasesScreen },
-  Search : {screen : SearchScreen}
+  Purchases: { screen: PurchasesScreen }
   },
   {
     mode:'card',

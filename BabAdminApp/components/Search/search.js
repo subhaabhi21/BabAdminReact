@@ -15,6 +15,8 @@ import {
 import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker, Root, Toast } from 'native-base'
 import CatalogRow from './catalog_row_search.js';
+import FacetOptions from './facet_sort_options.js';
+
 
 class SearchScreen extends React.Component{
 	static navigationOptions = {
@@ -47,8 +49,9 @@ class SearchScreen extends React.Component{
 											selected: false,
 											text: "Sort Price Low to High"
 										}],
-			filter_modal_visible: false,
-			in_wishlist: {}
+			in_wishlist: {},
+			priceMinChoosen: 10,
+			priceMaxChoosen: 10
 			}
 		this.search();
 	}
@@ -67,6 +70,13 @@ class SearchScreen extends React.Component{
 		this.setState({in_wishlist: data} , () => console.log("after: ",this.state.in_wishlist[key]));
 	}
 
+   multiSliderValuesChange(values){
+   	console.log("in multiSliderValuesChange: ",values)
+    this.setState({
+      priceMinChoosen: values[0],
+      priceMaxChoosen: values[1]
+    });
+  }
 
 	search(){
 		console.log("query",this.state.query)
@@ -88,6 +98,11 @@ class SearchScreen extends React.Component{
 		params['per_page'] = this.state.per_page;
 		params['sort_type'] = this.state.current_sort_option;
 
+		if(this.state.priceMinChoosen && this.state.priceMaxChoosen)
+		{
+			params['price.min'] = this.state.priceMinChoosen;
+			params['price.max'] = this.state.priceMaxChoosen;			
+		}
 
 		if(params) {
         url += (url.indexOf('?') === -1 ? '?' : '&') + Api.queryParams(params);
@@ -132,37 +147,29 @@ class SearchScreen extends React.Component{
 
   _keyExtractor = (item, index) => item.variant_id;
 
-  showFilterModal(){
-  	console.log("in showFilterModal")
-  	this.setState({
-			filter_modal_visible: true
-		})
-  }
 
 	render(){
 
      return (
      	<Root>
 			 <Container>
-					 <Header padder searchBar rounded>
-						 <Left>
+					 <Header>
+					 	<View style={{flex: 1 , flexDirection: 'row' , alignItems : 'center' , justifyContent: 'space-between'}}>
 		           <Button transparent>
 		             <Icon name='menu' />
 		           </Button>
-		         </Left>
-							<Item>
-		            <Icon name="ios-search" />
-		            <Input placeholder="Search"
-								 onChangeText={(text) => this.setState({query : text})}/>
-		          <Button transparent onPress={() => this.search()}>
-		            <Text>Search</Text>
-		          </Button>
-						</Item>
-						<Right>
-							<Button transparent onPress={() => this.showFilterModal()}>
-			             <Icon name='ios-funnel' />
-			         </Button>
-		         </Right>
+		       
+							<Item style={{width: 250 , backgroundColor:'#fff' , height : 50}}>
+			          <Icon name="ios-search" />
+			          <Input placeholder="Search"
+									 onChangeText={(text) => this.setState({query : text , variants : [] , in_wishlist : {}})}/>
+			          <Button transparent onPress={() => this.search()}>
+			            <Text>Search</Text>
+			          </Button>
+							</Item>
+
+							<FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} multiSliderValuesChange={() => this.multiSliderValuesChange()}/>
+						</View>
 	        </Header>
 					<Picker
             mode="dropdown"
@@ -185,40 +192,6 @@ class SearchScreen extends React.Component{
 			          renderItem={({item, index}) => <CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)}/> }
 			        />
 		      </View>
-
-		      <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.filter_modal_visible}
-          onRequestClose={() => {Toast.show({
-              text: 'You are trying to close modal!',
-              position: 'bottom',
-              duration: 5000
-            })}}
-          >
-          	<Header padder searchBar rounded>
-          	<Left>
-          	<Button transparent onPress={() => {Toast.show({
-              text: 'You are trying to close modal!',
-              position: 'bottom',
-              buttonText: 'Close'
-            })}}>
-					             <Text>Toast with button</Text>
-					         </Button>
-					         </Left>
-								<Right>
-									<Button transparent onPress={() => this.setState({filter_modal_visible : false})}>
-					             <Icon name='ios-close' />
-					         </Button>
-				         </Right>
-	        	</Header>
-		         <View style={{marginTop: 22}}>
-		          <View>
-		            <Text>Hello World!</Text>
-		          </View>
-		         </View>
-        </Modal>
-
 				</Container>
 			</Root>
     );
