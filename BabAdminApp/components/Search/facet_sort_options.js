@@ -21,42 +21,27 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 class FacetOptions extends React.Component{
 
 	constructor(props) {
-			console.log("in constructor of FacetOptions")
 		super(props);
-    console.log("props in constructor: ",props.priceMinChoosen,props.priceMinChoosen)
-
 		this.state = {
       		filter_modal_visible : false,
-      		sliderOneChanging: false,
-			    sliderOneValue: [5],
-			    multiSliderValue: [100, 7000]
-			}
-
+			    multiSliderValue: [0, 7000],
+			    priceMinChoosen : this.props.priceMinChoosen,
+			    priceMaxChoosen : this.props.priceMaxChoosen
+		}
 	}
 
+	multiSliderValuesChange(values) {
+		this.setState({
+			priceMinChoosen: values[0],
+      priceMaxChoosen: values[1]
+		})
+	}
 
-  sliderOneValuesChangeStart = () => {
-    this.setState({
-      sliderOneChanging: true,
-    });
-  }
+	submitFilters() {
+		this.props.setPriceRange([this.state.priceMinChoosen,this.state.priceMaxChoosen]);
+	}
 
-  sliderOneValuesChange = (values) => {
-    let newValues = [0];
-    newValues[0] = values[0];
-    this.setState({
-      sliderOneValue: newValues,
-    });
-  }
-
-  sliderOneValuesChangeFinish = () => {
-    this.setState({
-      sliderOneChanging: false,
-    });
-  }
-
-   showFilterModal(){
-  	console.log("in showFilterModal")
+  showFilterModal(){
   	this.setState({
 			filter_modal_visible: true
 		})
@@ -93,15 +78,18 @@ class FacetOptions extends React.Component{
 	              <MultiSlider
 			            values={[this.state.multiSliderValue[0], this.state.multiSliderValue[1]]}
 			            sliderLength={280}
-			            onValuesChange={this.props.multiSliderValuesChange}
+			            onValuesChange={(values) => this.multiSliderValuesChange(values)}
 			            min={0}
 			            max={10000}
 			            step={10}
 			            allowOverlap
 			            snapped
 			          />
-			          <Text>Choosen Range - {this.props.priceMinChoosen} to {this.props.priceMaxChoosen}</Text>
+			          <Text>Choosen Range - {this.state.priceMinChoosen} to {this.state.priceMaxChoosen}</Text>
 		          </View>
+		          <Button onPress={() => this.submitFilters()}>
+			            <Text>Submit</Text>
+			        </Button>
 		        </View>
         </Modal>
 

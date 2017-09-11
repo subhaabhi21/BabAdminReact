@@ -24,9 +24,7 @@ class SearchScreen extends React.Component{
  	};
 
 	constructor() {
-			console.log("in constructor of Search")
 		super();
-
 		this.state = {
       variants : [],
 			query : "",
@@ -50,8 +48,8 @@ class SearchScreen extends React.Component{
 											text: "Sort Price Low to High"
 										}],
 			in_wishlist: {},
-			priceMinChoosen: 10,
-			priceMaxChoosen: 10
+			priceMinChoosen: 0,
+			priceMaxChoosen: 7000
 			}
 		this.search();
 	}
@@ -64,23 +62,23 @@ class SearchScreen extends React.Component{
 	}
 
 	toggleWishlist(key){
-		console.log("prev value : ",this.state.in_wishlist[key],key)
 		let data = {...this.state.in_wishlist}; 
 		data[key] = !(this.state.in_wishlist[key]);
-		this.setState({in_wishlist: data} , () => console.log("after: ",this.state.in_wishlist[key]));
+		this.setState({in_wishlist: data} , () => console.log("wishlist item: ",this.state.in_wishlist[key]));
 	}
 
-   multiSliderValuesChange(values){
-   	console.log("in multiSliderValuesChange: ",values)
+  setPriceRange(values){
+   	console.log("in setpricerange of search: ",values)
     this.setState({
       priceMinChoosen: values[0],
-      priceMaxChoosen: values[1]
-    });
+      priceMaxChoosen: values[1],
+      page: 1,
+      variants : []
+    }, () => this.search());
   }
 
 	search(){
-		console.log("query",this.state.query)
-
+	
 		this.state.query = !this.state.query || typeof(this.state.query)!="string" ? "" : this.state.query;
 		this.state.browse_node = !this.state.browse_node || typeof(this.state.browse_node)!="string" ? "home" : this.state.browse_node;
 		this.state.page = !this.state.page || typeof(this.state.page)!="number" ? 1 : this.state.page;
@@ -97,12 +95,8 @@ class SearchScreen extends React.Component{
 		params['page'] = this.state.page ;
 		params['per_page'] = this.state.per_page;
 		params['sort_type'] = this.state.current_sort_option;
-
-		if(this.state.priceMinChoosen && this.state.priceMaxChoosen)
-		{
-			params['price.min'] = this.state.priceMinChoosen;
-			params['price.max'] = this.state.priceMaxChoosen;			
-		}
+		params['price.min'] = this.state.priceMinChoosen;
+		params['price.max'] = this.state.priceMaxChoosen;			
 
 		if(params) {
         url += (url.indexOf('?') === -1 ? '?' : '&') + Api.queryParams(params);
@@ -168,7 +162,7 @@ class SearchScreen extends React.Component{
 			          </Button>
 							</Item>
 
-							<FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} multiSliderValuesChange={() => this.multiSliderValuesChange()}/>
+							<FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} setPriceRange={(values) => this.setPriceRange(values)}/>
 						</View>
 	        </Header>
 					<Picker
