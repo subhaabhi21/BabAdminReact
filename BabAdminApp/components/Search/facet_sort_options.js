@@ -24,7 +24,7 @@ class FacetOptions extends React.Component{
 		super(props);
 		this.state = {
       		filter_modal_visible : false,
-			    multiSliderValue: [0, 7000],
+			    multiSliderValue: [10, 150],
 			    priceMinChoosen : this.props.priceMinChoosen,
 			    priceMaxChoosen : this.props.priceMaxChoosen
 		}
@@ -38,6 +38,7 @@ class FacetOptions extends React.Component{
 	}
 
 	submitFilters() {
+		this.setState({filter_modal_visible : false});
 		this.props.setPriceRange([this.state.priceMinChoosen,this.state.priceMaxChoosen]);
 	}
 
@@ -64,8 +65,8 @@ class FacetOptions extends React.Component{
               duration: 5000
             })}}
           >
-          	<Header>
-          			<Text> Choose Facets </Text>
+          	<Header style={styles.buttonBar}>
+          			<Text> Search Filter </Text>
 								<Right>
 									<Button transparent onPress={() => this.setState({filter_modal_visible : false})}>
 					             <Icon name='ios-close' />
@@ -79,17 +80,22 @@ class FacetOptions extends React.Component{
 			            values={[this.state.multiSliderValue[0], this.state.multiSliderValue[1]]}
 			            sliderLength={280}
 			            onValuesChange={(values) => this.multiSliderValuesChange(values)}
-			            min={0}
-			            max={10000}
-			            step={10}
+			            min={10}
+			            max={150}
+			            step={1}
 			            allowOverlap
 			            snapped
 			          />
 			          <Text>Choosen Range - {this.state.priceMinChoosen} to {this.state.priceMaxChoosen}</Text>
 		          </View>
-		          <Button onPress={() => this.submitFilters()}>
-			            <Text>Submit</Text>
-			        </Button>
+		          <View style={styles.buttonBar}>
+			          <Button onPress={() => this.setState({filter_modal_visible : false})}>
+				            <Text>CLEAR ALL</Text>
+				        </Button>
+			          <Button onPress={() => this.submitFilters()}>
+				            <Text>SHOW RESULTS</Text>
+				        </Button>
+			        </View>
 		        </View>
         </Modal>
 
@@ -102,7 +108,11 @@ class FacetOptions extends React.Component{
 
 
 const styles = StyleSheet.create({
- 
+ buttonBar : {
+ 	flex : 1,
+ 	flexDirection : row,
+ 	alignItems: 'center' 
+ }
 });
 
 module.exports = FacetOptions;

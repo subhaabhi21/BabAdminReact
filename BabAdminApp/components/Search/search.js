@@ -48,8 +48,8 @@ class SearchScreen extends React.Component{
 											text: "Sort Price Low to High"
 										}],
 			in_wishlist: {},
-			priceMinChoosen: 0,
-			priceMaxChoosen: 7000
+			priceMinChoosen: 10,
+			priceMaxChoosen: 150
 			}
 		this.search();
 	}
