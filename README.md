@@ -1,2 +1,0 @@
-# BabAdminReact
-BabAdmin- ReactNative
