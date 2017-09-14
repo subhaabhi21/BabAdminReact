@@ -10,7 +10,6 @@ import {
  StackNavigator,
 } from 'react-navigation';
 import LoginScreen from './components/Login/login';
-
 import HomeScreen from './components/Login/home';
 import PurchasesScreen from './components/Purchase/purchases';
 import SearchScreen from './components/Search/search';
@@ -43,9 +42,9 @@ export default class App extends React.Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
     });
-
     this.setState({ isReady: true });
   }
+
   render() {
     if (!this.state.isReady) {
       return (

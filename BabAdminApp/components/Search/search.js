@@ -16,8 +16,6 @@ import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker, Root, Toast } from 'native-base'
 import CatalogRow from './catalog_row_search.js';
 import FacetOptions from './facet_sort_options.js';
-
-
 class SearchScreen extends React.Component{
 	static navigationOptions = {
 	 title: 'Search',
@@ -162,7 +160,8 @@ class SearchScreen extends React.Component{
 			          </Button>
 							</Item>
 
-							<FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} setPriceRange={(values) => this.setPriceRange(values)}/>
+						  <FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} setPriceRange={(values) => this.setPriceRange(values)} />
+
 						</View>
 	        </Header>
 					<Picker
