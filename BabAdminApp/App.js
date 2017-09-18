@@ -17,9 +17,9 @@ import SearchScreen from './components/Search/search';
 
 
 const AdminApp = DrawerNavigator({
+  Search : {screen : SearchScreen},
   Login: { screen: LoginScreen },
   Home: { screen: HomeScreen },
-  Search : {screen : SearchScreen},
   Purchases: { screen: PurchasesScreen }
   },{
     mode : 'card',
@@ -33,7 +33,6 @@ export default class App extends React.Component {
     this.state = {
       isReady: false
     };
-
   }
 
   async componentWillMount() {

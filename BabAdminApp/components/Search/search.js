@@ -71,7 +71,6 @@ class SearchScreen extends React.Component{
 	}
 
   setPriceRange(values){
-   	console.log("in setpricerange of search: ",values)
     this.setState({
       priceMinChoosen: values[0],
       priceMaxChoosen: values[1],

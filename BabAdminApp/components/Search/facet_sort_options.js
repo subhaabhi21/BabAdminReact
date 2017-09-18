@@ -15,7 +15,6 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 class FacetOptions extends React.Component{
 	constructor(props) {
 		super(props);
-		console.log("props: ",props)
 		this.state = {
       		filter_modal_visible : false,
 			    priceMinChoosen : this.props.priceMinChoosen,
@@ -94,10 +93,10 @@ class FacetOptions extends React.Component{
 				          />
 				          <Text>Choosen Range - {this.state.priceMinChoosen} to {this.state.priceMaxChoosen}</Text>
 				        </View>
-			         	<View style={styles.filterFooter}>			        
+			         	<View style={styles.filterFooter}>
 		            		<Button onPress={() => this.clearPriceFilter()}>
 						            <Text>CLEAR ALL</Text>
-						        </Button>		           
+						        </Button>
 		            		<Button onPress={() => this.submitFilters()}>
 						            <Text>SHOW RESULTS</Text>
 						        </Button>
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'space-between' 
+    justifyContent:'space-between'
   },
  filterContent:{
  		flex:1,
