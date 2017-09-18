@@ -15,6 +15,7 @@ import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker, Root, Toast } from 'native-base'
 import CatalogRow from './catalog_row_search.js';
 import FacetOptions from './facet_sort_options.js';
+import AppHeader from '../app_common/app_header.js';
 
 class SearchScreen extends React.Component{
 	static navigationOptions = {
@@ -149,12 +150,9 @@ class SearchScreen extends React.Component{
      return (
      	<Root>
 			 <Container>
-					 <Header>
+			 		 <AppHeader />
+					 <Content>
 					 	<View style={{flex: 1 , flexDirection: 'row' , alignItems : 'center' , justifyContent: 'space-between'}}>
-					 		 <Button>
-					       <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
-					     </Button>
-		       
 							<Item style={{width: 250 , backgroundColor:'#fff' , height : 50}}>
 			          <Icon name="ios-search" />
 			          <Input placeholder="Search"
@@ -167,28 +165,28 @@ class SearchScreen extends React.Component{
 						  <FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} setPriceRange={(values) => this.setPriceRange(values)} />
 
 						</View>
-	        </Header>
-					<Picker
-            mode="dropdown"
-            selectedValue={this.state.current_sort_option}
-						onValueChange={this.changeSortOption.bind(this)}
-          >
-            {
-							this.state.sort_options.map( (item) =>
-							<Item label={item.text} value={item.code} key={item.code} />
-							)
-						}
-          </Picker>
-		      <View style={styles.container}>
-							{ Api.isLoading ?  <ActivityIndicator /> : null}
-							<FlatList
-			          data={this.state.variants}
-			          keyExtractor={this._keyExtractor}
-								onEndReached = {this.loadMore}
-								onEndThreshold = {20}
-			          renderItem={({item, index}) => <CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)}/> }
-			        />
-		      </View>
+						<Picker
+	            mode="dropdown"
+	            selectedValue={this.state.current_sort_option}
+							onValueChange={this.changeSortOption.bind(this)}
+	          >
+	            {
+								this.state.sort_options.map( (item) =>
+								<Item label={item.text} value={item.code} key={item.code} />
+								)
+							}
+	          </Picker>
+			      <View style={styles.container}>
+								{ Api.isLoading ?  <ActivityIndicator /> : null}
+								<FlatList
+				          data={this.state.variants}
+				          keyExtractor={this._keyExtractor}
+									onEndReached = {this.loadMore}
+									onEndThreshold = {20}
+				          renderItem={({item, index}) => <CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)}/> }
+				        />
+			      </View>
+		      </Content>
 				</Container>
 			</Root>
     );

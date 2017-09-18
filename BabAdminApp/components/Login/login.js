@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Api from '../app_common/common';
 import HomeScreen from './home';
+import AppHeader from '../app_common/app_header.js';
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Badge } from 'native-base'
 
@@ -61,17 +62,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <Container>
-       <Header>
-         <Left>
-           <Button transparent>
-             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
-           </Button>
-         </Left>
-         <Body>
-           <Title>Header</Title>
-         </Body>
-         <Right />
-       </Header>
+        <AppHeader />
        <Content>
          <KeyboardAvoidingView behavior='padding' style={styles.form}>
            <Text style ={{fontSize : 42, alignSelf : 'center', marginBottom : 20}}> Admin App </Text>

@@ -9,7 +9,8 @@ import {
 			} from 'react-native';
 
 import Api from '../app_common/common';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+import AppHeader from '../app_common/app_header.js';
 
 class HomeScreen extends React.Component{
  	 static navigationOptions = {
@@ -30,18 +31,8 @@ class HomeScreen extends React.Component{
 	render(){
 		 return (
 			 <Container>
-			 <Header>
-         <Left>
-           <Button transparent>
-             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
-           </Button>
-         </Left>
-         <Body>
-           <Title>Header</Title>
-         </Body>
-         <Right />
-       </Header>
-       <Content padder>
+			  <AppHeader />
+        <Content padder>
 				 	<View style = {styles.container}>
 						<Text style={{fontSize:36, marginBottom:20}}>Admin Home </Text>
 						<Button bordered block style={styles.button}

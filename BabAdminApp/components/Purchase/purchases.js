@@ -10,7 +10,8 @@ import {
 			} from 'react-native';
 
 import Api from '../app_common/common';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+import AppHeader from '../app_common/app_header.js';
 
 class PurchasesScreen extends React.Component{
 	 	 static navigationOptions = {
@@ -51,17 +52,7 @@ class PurchasesScreen extends React.Component{
     if (Api.isLoading) {
        return (
 				 <Container>
-					 <Header>
-		         <Left>
-		           <Button transparent>
-		             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
-		           </Button>
-		         </Left>
-		         <Body>
-		           <Title>Header</Title>
-		         </Body>
-		         <Right />
-		       </Header>
+					<AppHeader />
 	       	<Content padder>
          <View style={{flex: 1, justifyContent: 'center'}}>
            <ActivityIndicator />
@@ -74,17 +65,7 @@ class PurchasesScreen extends React.Component{
      return (
 
 			 <Container>
-				 <Header>
-	         <Left>
-	           <Button transparent>
-	             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
-	           </Button>
-	         </Left>
-	         <Body>
-	           <Title>Header</Title>
-	         </Body>
-	         <Right />
-	       </Header>
+				 <AppHeader />
        	<Content padder>
 		      <View style={styles.container}>
 		        <FlatList
