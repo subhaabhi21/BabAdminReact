@@ -14,6 +14,14 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
 
 class LoginScreen extends React.Component {
 
+   static navigationOptions = {
+    drawerLabel: 'Login',
+    drawerIcon: ({ tintColor }) => (
+      <Icon name='ios-clipboard'
+      />
+    ),
+  };
+
   constructor() {
       console.log("inn constructor of Login")
     super();
@@ -56,7 +64,7 @@ class LoginScreen extends React.Component {
        <Header>
          <Left>
            <Button transparent>
-             <Icon name='menu' />
+             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
            </Button>
          </Left>
          <Body>

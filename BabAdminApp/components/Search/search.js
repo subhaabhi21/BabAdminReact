@@ -11,15 +11,19 @@ import {
 					Modal,
 					ToastAndroid
 			} from 'react-native';
-import SideMenu from '../app_common/side_menu';
 import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right,Item,Input, Body, Icon, Text, Picker, Root, Toast } from 'native-base'
 import CatalogRow from './catalog_row_search.js';
 import FacetOptions from './facet_sort_options.js';
+
 class SearchScreen extends React.Component{
 	static navigationOptions = {
-	 title: 'Search',
- 	};
+    drawerLabel: 'Search',
+    drawerIcon: ({ tintColor }) => (
+      <Icon name='ios-search'
+      />
+    ),
+  };
 
 	constructor() {
 		super();
@@ -147,7 +151,9 @@ class SearchScreen extends React.Component{
 			 <Container>
 					 <Header>
 					 	<View style={{flex: 1 , flexDirection: 'row' , alignItems : 'center' , justifyContent: 'space-between'}}>
-					 		<SideMenu />
+					 		 <Button>
+					       <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
+					     </Button>
 		       
 							<Item style={{width: 250 , backgroundColor:'#fff' , height : 50}}>
 			          <Icon name="ios-search" />

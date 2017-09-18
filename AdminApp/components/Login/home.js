@@ -12,9 +12,13 @@ import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
 
 class HomeScreen extends React.Component{
-	static navigationOptions = {
-	 title: 'Welcome',
- 	};
+ 	 static navigationOptions = {
+    drawerLabel: 'Home',
+    drawerIcon: ({ tintColor }) => (
+      <Icon name='ios-home'
+      />
+    ),
+  };
 
 	constructor() {
 			console.log("inn constructor of Home")
@@ -28,7 +32,7 @@ class HomeScreen extends React.Component{
 			 <Header>
          <Left>
            <Button transparent>
-             <Icon name='menu' />
+             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
            </Button>
          </Left>
          <Body>

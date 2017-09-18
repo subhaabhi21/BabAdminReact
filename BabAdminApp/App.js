@@ -8,6 +8,7 @@ import {
 
 import {
  StackNavigator,
+ DrawerNavigator,
 } from 'react-navigation';
 import LoginScreen from './components/Login/login';
 import HomeScreen from './components/Login/home';
@@ -15,15 +16,14 @@ import PurchasesScreen from './components/Purchase/purchases';
 import SearchScreen from './components/Search/search';
 
 
-const AdminApp = StackNavigator({
+const AdminApp = DrawerNavigator({
   Search : {screen : SearchScreen},
   Login: { screen: LoginScreen },
   Home: { screen: HomeScreen },
   Purchases: { screen: PurchasesScreen }
-  },
-  {
-    mode:'card',
-    headerMode: 'float'
+  },{
+    mode : 'card',
+    headerMode : 'float'
   }
 );
 

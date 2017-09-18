@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   TextInput,
+  Image,
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -13,6 +14,14 @@ import HomeScreen from './home';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Badge } from 'native-base'
 
 class LoginScreen extends React.Component {
+
+   static navigationOptions = {
+    drawerLabel: 'Login',
+    drawerIcon: ({ tintColor }) => (
+     <Icon name='ios-clipboard'
+      />
+    ),
+  };
 
   constructor() {
       console.log("inn constructor of Login")
@@ -59,7 +68,7 @@ console.log("url: ",url)
        <Header>
          <Left>
            <Button transparent>
-             <Icon name='menu' />
+             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
            </Button>
          </Left>
          <Body>

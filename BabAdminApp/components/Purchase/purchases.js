@@ -13,23 +13,28 @@ import Api from '../app_common/common';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
 
 class PurchasesScreen extends React.Component{
-	static navigationOptions = {
-	 title: 'Purchases',
- 	};
+	 	 static navigationOptions = {
+    drawerLabel: 'Purchases',
+    drawerIcon: ({ tintColor }) => (
+      <Icon name='ios-cash'
+      />
+    ),
+  };
 
 	constructor() {
-			console.log("inn constructor of Purchase")
+		console.log("inn constructor of Purchase")
 		super();
 
 		this.state = {
       purchases : []
 		};
-		this.getPurchases()
+		this.getPurchases();
 	}
 
-
 	getPurchases(){
+		console.log("in get purchases")
 		Api.call_api("purchases/get_purchases.json","","GET").then((response) => {
+			console.log("response :",response)
 			if(response.status == 'success'){
         this.setState({purchases : response.result})
 			}
@@ -49,7 +54,7 @@ class PurchasesScreen extends React.Component{
 					 <Header>
 		         <Left>
 		           <Button transparent>
-		             <Icon name='menu' />
+		             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
 		           </Button>
 		         </Left>
 		         <Body>
@@ -72,7 +77,7 @@ class PurchasesScreen extends React.Component{
 				 <Header>
 	         <Left>
 	           <Button transparent>
-	             <Icon name='menu' />
+	             <Icon name='menu'  onPress={() =>  this.props.navigation.navigate('DrawerOpen')}/>
 	           </Button>
 	         </Left>
 	         <Body>
