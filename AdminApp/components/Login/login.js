@@ -44,7 +44,7 @@ class LoginScreen extends React.Component {
       var url = link.concat('customer%5Bemail%5D=',this.state.username,'&customer%5Bpassword%5D=',this.state.password);
       var fetch_type='POST';
 
-console.log("url: ",url)
+      console.log("url: ",url)
       fetch(url,{method: fetch_type}).then((response) => response.json()).then((response) => {
         console.log("resp: ",response)
         if(response.status == 'success'){
