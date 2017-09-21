@@ -52,9 +52,11 @@ class SearchScreen extends React.Component{
 										}],
 			in_wishlist: {},
 			priceMinChoosen: 10,
-			priceMaxChoosen: 150
+			priceMaxChoosen: 150,
+			listView: true
 			}
 		this.search();
+
 	}
 
 	changeSortOption(value:string){
@@ -65,7 +67,7 @@ class SearchScreen extends React.Component{
 	}
 
 	toggleWishlist(key){
-		let data = {...this.state.in_wishlist}; 
+		let data = {...this.state.in_wishlist};
 		data[key] = !(this.state.in_wishlist[key]);
 		this.setState({in_wishlist: data} , () => console.log("wishlist item: ",this.state.in_wishlist[key]));
 	}
@@ -80,7 +82,7 @@ class SearchScreen extends React.Component{
   }
 
 	search(){
-	
+
 		this.state.query = !this.state.query || typeof(this.state.query)!="string" ? "" : this.state.query;
 		this.state.browse_node = !this.state.browse_node || typeof(this.state.browse_node)!="string" ? "home" : this.state.browse_node;
 		this.state.page = !this.state.page || typeof(this.state.page)!="number" ? 1 : this.state.page;
@@ -98,7 +100,7 @@ class SearchScreen extends React.Component{
 		params['per_page'] = this.state.per_page;
 		params['sort_type'] = this.state.current_sort_option;
 		params['price.min'] = this.state.priceMinChoosen;
-		params['price.max'] = this.state.priceMaxChoosen;			
+		params['price.max'] = this.state.priceMaxChoosen;
 
 		if(params) {
         url += (url.indexOf('?') === -1 ? '?' : '&') + Api.queryParams(params);
@@ -118,7 +120,7 @@ class SearchScreen extends React.Component{
 				})
  				var temp = {}
 				response.result.variants.forEach(function(element) {
-				    temp[element.title] = false			   
+				    temp[element.title] = false
 				});
 				 this.setState(prevState => ({in_wishlist: {
         ...prevState.in_wishlist,...temp}
@@ -143,6 +145,11 @@ class SearchScreen extends React.Component{
 
   _keyExtractor = (item, index) => item.variant_id;
 
+	toggleView() {
+		this.setState({listView : !(this.state.listView), page: 0,variants : [] }, () => {
+			this.search();
+		})
+	}
 
 	render(){
 
@@ -152,7 +159,12 @@ class SearchScreen extends React.Component{
 			 		 <AppHeader />
 					 <Content>
 					 	<View style={{flex: 1 , flexDirection: 'row' , alignItems : 'center' , justifyContent: 'space-between'}}>
-							<Item style={{width: 250 , backgroundColor:'#fff' , height : 50}}>
+							<Button transparent onPress={() => this.toggleView()}>
+								{!this.state.listView && <Icon name="list"/>}
+								{this.state.listView && <Icon name="grid"/>}
+							</Button>
+
+							<Item style={{width: 200 , backgroundColor:'#fff' , height : 50}}>
 			          <Icon name="ios-search" />
 			          <Input placeholder="Search"
 									 onChangeText={(text) => this.setState({query : text , variants : [] , in_wishlist : {}})}/>
@@ -175,15 +187,22 @@ class SearchScreen extends React.Component{
 								)
 							}
 	          </Picker>
-			      <View style={styles.container}>
+			      <View>
 								{ Api.isLoading ?  <ActivityIndicator /> : null}
-								<FlatList
+								{this.state.listView && <FlatList
 				          data={this.state.variants}
 				          keyExtractor={this._keyExtractor}
-									onEndReached = {this.loadMore}
 									onEndThreshold = {20}
-				          renderItem={({item, index}) => <CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)}/> }
-				        />
+									numColumns = {1}
+				          renderItem={({item, index}) =><CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)} listView={this.state.listView}/>}
+				        />}
+								{!this.state.listView && <FlatList
+				          data={this.state.variants}
+				          keyExtractor={this._keyExtractor}
+									onEndThreshold = {20}
+									numColumns = {2}
+				          renderItem={({item, index}) =><CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)} listView={this.state.listView}/>}
+				        />}
 			      </View>
 		      </Content>
 				</Container>
@@ -193,32 +212,7 @@ class SearchScreen extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#efefef',
-    alignItems: 'stretch',
-  },
-  catalog: {
-    flex: 1,
-    flexDirection: 'row',
-    marginBottom: 10,
-    padding:10,
-		backgroundColor:'#fff'
 
-  },
-  catalog_details: {
-  	flex: 1,
-  	flexDirection: 'column',
-  	backgroundColor:'#fff'
-  },
-	buttonContainer: {
-		backgroundColor: '#4286f4',
-		paddingVertical: 15
-	},
-	buttonText: {
-		textAlign: 'center',
-		color: '#ffffff'
-	}
 });
 
 module.exports = SearchScreen;
