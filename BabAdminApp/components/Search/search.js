@@ -191,7 +191,7 @@ class SearchScreen extends React.Component{
 									<FlatList
 				          data={this.state.variants}
 				          keyExtractor={this._keyExtractor}
-									onEndReachedThreshold={0.5}
+									onEndReachedThreshold={1}
 									onEndReached={({ distanceFromEnd }) => {
 										 console.log('on end reached ', distanceFromEnd);
 										 this.loadMore();
@@ -202,7 +202,7 @@ class SearchScreen extends React.Component{
 								{!this.state.listView && <FlatList
 				          data={this.state.variants}
 				          keyExtractor={this._keyExtractor}
-									onEndReachedThreshold={0.5}
+									onEndReachedThreshold={1}
 									onEndReached={({ distanceFromEnd }) => {
 										 console.log('on end reached ', distanceFromEnd);
 										 this.loadMore();

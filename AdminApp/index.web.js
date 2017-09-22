@@ -26,19 +26,11 @@ export default class App extends React.Component {
     );
   }
 }
-// import React from 'react'
-// import { createStore } from 'redux'
-// import { Provider } from 'react-redux'
-// import App from './components/redux_todo/components/App'
-// import reducer from './components/redux_todo/reducers'
-// export default class TodoApp extends React.Component {
-//   store = createStore(reducer);
-//   render() {
-//     console.log("in todoapp")
-//     return (
-//       <Provider store={this.store}>
-//         <App />
-//       </Provider>
-//     );
-//   }
-// }
+AppRegistry.registerComponent('App', () => App);
+
+if (window.document) {
+  AppRegistry.runApplication('App', {
+    initialProps: {},
+    rootTag: document.getElementById('react-app')
+  });
+}

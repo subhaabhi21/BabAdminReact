@@ -32,6 +32,7 @@ function nav(state = initialNavState, action) {
       break;
   }
   // Simply return the original `state` if `nextState` is null or undefined.
+  console.log("next state: ",nextState)
   return nextState || state;
 }
 
