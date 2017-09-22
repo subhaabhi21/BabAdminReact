@@ -125,8 +125,6 @@ class SearchScreen extends React.Component{
 				 this.setState(prevState => ({in_wishlist: {
         ...prevState.in_wishlist,...temp}
     }))
-
-
 			}
 			else{
 				if(response.error)
@@ -187,23 +185,32 @@ class SearchScreen extends React.Component{
 								)
 							}
 	          </Picker>
-			      <View>
+						<View>
 								{ Api.isLoading ?  <ActivityIndicator /> : null}
-								{this.state.listView && <FlatList
+								{this.state.listView &&
+									<FlatList
 				          data={this.state.variants}
 				          keyExtractor={this._keyExtractor}
-									onEndThreshold = {20}
+									onEndReachedThreshold={0.5}
+									onEndReached={({ distanceFromEnd }) => {
+										 console.log('on end reached ', distanceFromEnd);
+										 this.loadMore();
+									 }}
 									numColumns = {1}
 				          renderItem={({item, index}) =><CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)} listView={this.state.listView}/>}
 				        />}
 								{!this.state.listView && <FlatList
 				          data={this.state.variants}
 				          keyExtractor={this._keyExtractor}
-									onEndThreshold = {20}
+									onEndReachedThreshold={0.5}
+									onEndReached={({ distanceFromEnd }) => {
+										 console.log('on end reached ', distanceFromEnd);
+										 this.loadMore();
+									 }}
 									numColumns = {2}
 				          renderItem={({item, index}) =><CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)} listView={this.state.listView}/>}
 				        />}
-			      </View>
+							</View>
 		      </Content>
 				</Container>
 			</Root>
