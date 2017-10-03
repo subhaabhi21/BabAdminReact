@@ -50,7 +50,7 @@ class CatalogRow extends React.Component{
             <Text > {this.props.item.title}</Text>
             <Text >Price : {this.props.item.final_price.value}</Text>
           </View>
-          <Button onPress={() => {this.props.toggleWishlist(this.props.item.title)}}>
+          <Button transparent onPress={() => {this.props.toggleWishlist(this.props.item.title)}}>
               <Icon name = { this.props.in_wishlist[this.props.item.title] ? 'ios-heart' : 'ios-heart-outline'} />
           </Button>
        </Animated.View>
