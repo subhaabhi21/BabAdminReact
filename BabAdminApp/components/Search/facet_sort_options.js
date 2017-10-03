@@ -56,7 +56,7 @@ class FacetOptions extends React.Component{
 
 	render(){
 		 return (
-			 <View>
+			 <View style={{height: 50}}>
 					<Button onPress={() => this.showFilterModal()}>
 					    <Icon name='ios-funnel' />
 					</Button>

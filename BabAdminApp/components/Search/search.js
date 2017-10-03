@@ -150,29 +150,23 @@ class SearchScreen extends React.Component{
 	}
 
 	render(){
-
      return (
-     	<Root>
-			 <Container>
-			 		 <AppHeader />
-					 <Content>
-					 	<View style={{flex: 1 , flexDirection: 'row' , alignItems : 'center' , justifyContent: 'space-between'}}>
-							<Button transparent onPress={() => this.toggleView()}>
-								{!this.state.listView && <Icon name="list"/>}
-								{this.state.listView && <Icon name="grid"/>}
-							</Button>
-
-							<Item style={{width: 200 , backgroundColor:'#fff' , height : 50}}>
-			          <Icon name="ios-search" />
-			          <Input placeholder="Search"
-									 onChangeText={(text) => this.setState({query : text , variants : [] , in_wishlist : {}})}/>
-			          <Button transparent onPress={() => this.search()}>
-			            <Text>Search</Text>
-			          </Button>
-							</Item>
-
-						  <FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} setPriceRange={(values) => this.setPriceRange(values)} />
-
+			 <View style={{marginTop: 20,flex:1}}>
+			 		  <AppHeader />
+					 	<View style={{flexDirection: 'row' , alignItems : 'center' , height: 60, justifyContent: 'space-between'}}>
+								<Button style={{marginTop:4}} onPress={() => this.toggleView()}>
+									{!this.state.listView && <Icon name="list"/>}
+									{this.state.listView && <Icon name="grid"/>}
+								</Button>
+								<Item style={{width: 180 , backgroundColor:'#fff' , height : 50}}>
+				          <Icon name="ios-search" />
+				          <Input placeholder="Search"
+										 onChangeText={(text) => this.setState({query : text , variants : [] , in_wishlist : {}})}/>
+				          <Button transparent onPress={() => this.search()}>
+				            <Text>Search</Text>
+				          </Button>
+								</Item>
+							  <FacetOptions priceMinChoosen={this.state.priceMinChoosen} priceMaxChoosen={this.state.priceMaxChoosen} setPriceRange={(values) => this.setPriceRange(values)} />
 						</View>
 						<Picker
 	            mode="dropdown"
@@ -185,7 +179,7 @@ class SearchScreen extends React.Component{
 								)
 							}
 	          </Picker>
-						<View>
+						<View style={{flex: 1}}>
 								{ Api.isLoading ?  <ActivityIndicator /> : null}
 								{this.state.listView &&
 									<FlatList
@@ -210,10 +204,8 @@ class SearchScreen extends React.Component{
 									numColumns = {2}
 				          renderItem={({item, index}) =><CatalogRow item={item} in_wishlist={this.state.in_wishlist} toggleWishlist={() => this.toggleWishlist(item.title)} listView={this.state.listView}/>}
 				        />}
-							</View>
-		      </Content>
-				</Container>
-			</Root>
+						</View>
+					</View>
     );
 	}
 }
