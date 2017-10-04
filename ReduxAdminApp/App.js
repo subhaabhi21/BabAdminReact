@@ -1,4 +1,8 @@
-import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import AppReducer from './components/redux_comps/reducers';
+import AppWithNavigationState from './components/app_common/app_home';
+import React, {Component} from 'react';
 import {
           AppRegistry,
           StyleSheet,
@@ -6,30 +10,9 @@ import {
           ActivityIndicator,
        } from 'react-native';
 
-import {
- StackNavigator,
- DrawerNavigator,
-} from 'react-navigation';
-import LoginScreen from './components/Login/login';
-import HomeScreen from './components/Login/home';
-import PurchasesScreen from './components/Purchase/purchases';
-import SearchScreen from './components/Search/search';
+export default class App extends Component {
+  store = createStore(AppReducer);
 
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-
-const AdminApp = DrawerNavigator({
-  Search : {screen : SearchScreen},
-  Login: { screen: LoginScreen },
-  Home: { screen: HomeScreen },
-  Purchases: { screen: PurchasesScreen }
-  },{
-    mode : 'card',
-    headerMode : 'float'
-  }
-);
-
-export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -56,7 +39,9 @@ export default class App extends React.Component {
     }
 
     return (
-      <AdminApp />
-   )
+      <Provider store={this.store}>
+        <AppWithNavigationState />
+      </Provider>
+    );
   }
 }

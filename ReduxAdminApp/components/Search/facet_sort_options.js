@@ -75,9 +75,9 @@ class FacetOptions extends React.Component{
 		         <View style={{marginTop: 20}}>
 			         	<View style={styles.filterHeader}>
 			         		<Text> Search Filter </Text>
-										<Button onPress={() => this.closeFilterModal()}>
-						             <Icon name='ios-close' />
-						         </Button>
+									<Button onPress={() => this.closeFilterModal()}>
+					             <Icon name='ios-close' />
+					         </Button>
 					     	</View>
 			         	<View style={styles.filterContent}>
 			            <Text>Choose Price Range</Text>
@@ -110,20 +110,17 @@ class FacetOptions extends React.Component{
 
 const styles = StyleSheet.create({
   filterHeader:{
-    flex:1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'space-between'
+    justifyContent:'space-around'
   },
  filterContent:{
- 		flex:1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent:'center',
     marginTop: 70
  },
  filterFooter:{
- 		flex:1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent:'space-around',
